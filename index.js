@@ -17,16 +17,14 @@ const start = (seconds, amount) => {
 
         if( (clicked % 5) === 0 ) console.log(`Clicked ${clicked} / ${amount}`);
 
-        if( (clicked % 10) === 0) robot.setMouseDelay(2000)
+        if( (clicked % 1000) === 0) robot.setMouseDelay(2000)
 
         if(clicked >= amount) clearInterval(interval);
 
     }, milliseconds);
 
-    console.log(robot.getMousePos());
-
 }
 
-start(1, 20000);
+start(0.6, 22000);
 
 
