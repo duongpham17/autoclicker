@@ -25,7 +25,7 @@ module.exports = (drinkInSeconds) => {
     }
 
     const rapidHeal = () => {
-        if( (clicks & 20) === 0 && !drinking) {
+        if( (clicks % 20) === 0 && !drinking) {
             robot.mouseClick();
             setTimeout(() => robot.mouseClick(), 300);
         }
