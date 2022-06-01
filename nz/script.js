@@ -6,7 +6,6 @@ module.exports = (drinkInSeconds) => {
     const milliseconds = seconds * 1000;
 
     const rapid_heal_coord  = [593, 150];
-    const special_attack_coord = [628, 205 ]
     const inventory_x_coord = [581, 622, 664, 707];
     const inventory_y_coord = [321, 355, 396, 424, 464, 504];
 
@@ -25,17 +24,9 @@ module.exports = (drinkInSeconds) => {
     }
 
     const rapidHeal = () => {
-        if( (clicks % 20) === 0 && !drinking) {
+        if( (clicks % 17) === 0 && !drinking) {
             robot.mouseClick();
-            setTimeout(() => robot.mouseClick(), 300);
-        }
-    }
-
-    const specialAttack = () => {
-        if( (clicks % 151) === 0 && !drinking) {
-            robot.moveMouse(special_attack_coord[0], special_attack_coord[1]);
             setTimeout(() => robot.mouseClick(), 500);
-            setTimeout(() => robot.moveMouse(rapid_heal_coord[0], rapid_heal_coord[1]), 1500);
         }
     }
 
@@ -86,8 +77,6 @@ module.exports = (drinkInSeconds) => {
         logToTerminal();
 
         rapidHeal();
-
-        specialAttack();
 
         drinkPotion();
 

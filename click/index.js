@@ -1,2 +1,2 @@
 
-require('./script')(1, 25000);
+require('./script')(0.7, 50000)

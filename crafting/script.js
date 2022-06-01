@@ -1,85 +1,49 @@
 const robot = require('robotjs');
 
-const closeBankTabLocation = [483,72];
-const bankLocation = [508,341];
-const withdrawMoltenGlassLocation = [416,148];
-const depositMoltenGlassLocation = [622,279];
-const glassBlowingPipeLocation = [579, 284];
-const moltenGlassInventoryLocation = [622, 278];
+const locationRandomise = (value) => (Math.floor(Math.random() * 4)) + value;
 
-const startCrafting = () => {
+const moveMouse = ({x, y}) => robot.moveMouse(locationRandomise(x), locationRandomise(y)); 
 
-    setTimeout(() => {
-        robot.moveMouse(glassBlowingPipeLocation[0], glassBlowingPipeLocation[1]);
-    }, 1000);
-    setTimeout(() => {
-        robot.mouseClick();
-    }, 1500);
+const timeoutMilli = (value) => 600 * value; 
 
-    setTimeout(() => {
-        robot.moveMouse(moltenGlassInventoryLocation[0], moltenGlassInventoryLocation[1]);
-    }, 2000);
-    setTimeout(() => {
-        robot.mouseClick();
-    }, 2500);
+module.exports = (end) => {
 
-    setTimeout(() => {
-        robot.keyTap("space");
-    }, 3500)
+    const BANK_LOCATION = { x: 1294, y: 765 };
+    const INVENTTORY_LOCATION = { x: 1541, y: 852 };
+    const MOLTEN_GLASS_IN_BANK_LOCATION = { x: 1108, y: 784 };
+    const BANK_CLOSE_LOCATION = { x: 1365, y: 566 };
+    const BLOWPIPE_LOCATION = { x: 1458, y: 779 };
+    const DURATION = 55 * 1000; 
 
-}
+    let timer = 0;
+    let completed = 0;
 
-const startBanking = () => {
-    setTimeout(() => {
-        robot.moveMouse(bankLocation[0], bankLocation[1]);
-    }, 1000);
-    setTimeout(() => {
-        robot.mouseClick();
-    }, 1500);
+    const interval =  setInterval(() => {
+        timer+= 1000;   
+        
+        if(timer > DURATION) timer = 0;
 
-    setTimeout(() => {
-        robot.moveMouse(depositMoltenGlassLocation[0], depositMoltenGlassLocation[1]);
-    }, 2000);
-    setTimeout(() => {
-        robot.mouseClick();
-    }, 2500);
-
-    setTimeout(() => {
-        robot.moveMouse(withdrawMoltenGlassLocation[0], withdrawMoltenGlassLocation[1]);
-    }, 3500);
-    setTimeout(() => {
-        robot.mouseClick();
-    }, 4500);
-
-    setTimeout(() => {
-        robot.moveMouse(closeBankTabLocation[0], closeBankTabLocation[1]);
-    }, 5500);
-    setTimeout(() => {
-        robot.mouseClick();
-    }, 6000);
-
-}
-
-module.exports = () => {
-
-    let clicks = 0;
-    let crafting = false;
-    let banking = false;
-
-    setInterval(() => {
-        clicks++;
-
-        if( (clicks % 1) === 0 && !crafting) {
-            crafting = true
-            startCrafting();
+        if(timer === DURATION) {
+            setTimeout(() => moveMouse(BANK_LOCATION), timeoutMilli(0));
+            setTimeout(() => robot.mouseClick(), timeoutMilli(1));
+            setTimeout(() => moveMouse(INVENTTORY_LOCATION), timeoutMilli(2));
+            setTimeout(() => robot.mouseClick(), timeoutMilli(3));
+            setTimeout(() => moveMouse(MOLTEN_GLASS_IN_BANK_LOCATION), timeoutMilli(4));
+            setTimeout(() => robot.mouseClick(), timeoutMilli(5)); 
+            setTimeout(() => moveMouse(BANK_CLOSE_LOCATION), timeoutMilli(6));
+            setTimeout(() => robot.mouseClick(), timeoutMilli(7));
+            setTimeout(() => moveMouse(BLOWPIPE_LOCATION), timeoutMilli(8));
+            setTimeout(() => robot.mouseClick(), timeoutMilli(9));
+            setTimeout(() => moveMouse(INVENTTORY_LOCATION), timeoutMilli(10));
+            setTimeout(() => robot.mouseClick(), timeoutMilli(11));
+            setTimeout(() => robot.keyTap("space"), timeoutMilli(12));
+            completed++;
+            console.log(`Completed: ${completed}`)
         }
 
-        if( (clicks % 30) === 0 && !banking) {
-
-        }
-
-        console.log(`clicks ${clicks}`)
+        if(completed === end) clearInterval(interval)
 
     }, 1000);
+
 
 }

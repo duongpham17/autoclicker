@@ -3,7 +3,7 @@ const robot = require("robotjs");
 module.exports = (seconds, amount) => {
 
     //Information on how long the autoclicker will run for HOUR:MINUTES:SECONDS
-    const duration = new Date(amount * 1000).toISOString().substr(11, 8);
+    const duration = new Date(amount * 1000 * seconds).toISOString().substr(11, 8);
     console.log(`Duration (HOUR:MINUTE:SECOND) : ${duration}`)
 
     const milliseconds = seconds * 1000;
